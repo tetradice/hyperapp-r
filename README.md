@@ -1,78 +1,180 @@
-# [Hyperapp](https://hyperapp.dev) [![npm](https://img.shields.io/npm/v/hyperapp.svg?label=&color=0080FF)](https://github.com/jorgebucaran/hyperapp/releases/latest)
+# Hyperapp-R
 
-> The tiny framework for building web interfaces.
+Hyperapp-R is fork from Hyperapp V2. 
 
-- **Do more with less**—We have minimized the concepts you need to learn to be productive. Views, actions, effects, and subscriptions are all pretty easy to get to grips with and work together seamlessly.
-- **Write what, not how**—With a declarative syntax that's easy to read and natural to write, Hyperapp is your tool of choice to develop purely functional, feature-rich, browser-based applications.
-- **Hypercharged**—Hyperapp is a modern VDOM engine, state management solution, and application design pattern all-in-one. Once you learn to use it, there'll be no end to what you can do.
+## Features
 
-To learn more, go to <https://hyperapp.dev> for documentation, guides, and examples.
+- 99% backword compatibility -- Libraries and middleware for Hyperapp V2 can be used in Hyperapp-R as well
+- Return of functions from Hyperapp V1
+    - Ressurection of DOM event handlers -- oncreate, onupdate, onremove, ondestroy
+    - Ressurection of style attribute by string -- `<div style="margin-top: 10em;"></div>`
+- TypeScript full support
+- Small change
+    - Distribution package uses Common JS format instead of ES Module (This will avoid errors when using tools like jest)
 
-## Quickstart
+## Install
 
-Install Hyperapp with npm or Yarn:
+## Start Guide
 
-```console
-npm i hyperapp
-```
-
-Then with a module bundler like [Parcel](https://parceljs.org) or [Webpack](https://webpack.js.org) import it in your application and get right down to business.
+All you have to do after installation is replace `hyperapp` with `hyperapp-r`.
 
 ```js
-import { h, app } from "hyperapp"
+// Before:
+import { app, h } from "hyperapp-r"
+import { preventDefault } from "@hyperapp/events"
+
+// After:
+import { app, h } from "hyperapp-r"
+import { preventDefault } from "@hyperapp-r/events"
 ```
 
-Don't want to set up a build step? Import Hyperapp in a `<script>` tag as a module. Don't worry; modules are supported in all evergreen, self-updating desktop, and mobile browsers.
+`hyperapp-r` and `@hyperapp-r/xxx` has the same interface as hyperapp V2. So if you replace the module name, it will work exactly the same.
 
-```html
-<script type="module">
-  import { h, app } from "https://unpkg.com/hyperapp"
-</script>
+If you are using a library for hyperapp V2, you can leave the name as it is. The library for hyperapp V2 works the same way in Hyperapp-R.
+
+```js
+import { app, h } from "hyperapp-r"
+import { component } from "hyperapp-component" // As it is
 ```
 
-Here's the first example to get you started: a counter that can go up or down. You can try it online [here](https://codesandbox.io/s/hyperapp-playground-fwjlo).
+## Additional functions
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script type="module">
-      import { h, app } from "https://unpkg.com/hyperapp"
+### Lifecycle Events (Return from Hyperapp V1)
 
-      app({
-        init: 0,
-        view: state =>
-          h("div", {}, [
-            h("h1", {}, state),
-            h("button", { onClick: state => state - 1 }, "-"),
-            h("button", { onClick: state => state + 1 }, "+")
-          ]),
-        node: document.getElementById("app")
-      })
-    </script>
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
-</html>
+As with V1, You can be notified when elements managed by the virtual DOM are created, updated or removed via lifecycle events. Use them for animation, data fetching, wrapping third-party libraries, cleaning up resources, etc.
+
+Note that lifecycle events are attached to virtual DOM nodes, not to components. Consider adding a key to ensure that the event is attached to a specific DOM element, rather than a recycled one.
+
+In addition, as an original function of Hyperapp-R, it is possible to set an event with another name.
+
+- oncreate -> created
+- onupdate -> updated
+- onremove -> removing
+- ondestroy -> destroyed
+
+This is because in Hyperapp-R, you can use Action in event handlers such as `onclick` or `onchange`, but you cannot use Action in lifecycle events such as `oncreate` or `onupdate`, and you can use only functions that receive DOM elements. In other words, it is not possible to update State or execute Effect in lifecycle events.
+
+#### oncreate (alias: created)
+
+This event is fired after the element is created and attached to the DOM. Use it to manipulate the DOM node directly, make a network request, create a slide/fade in animation, etc.
+
+```jsx
+import { h } from "hyperapp-r"
+
+export const Textbox = ({ placeholder }) => (
+  <input
+    type="text"
+    placeholder={placeholder}
+    oncreate={element => element.focus()}
+  />
+)
 ```
 
-The app starts off with `init` as the initial state. Our code doesn't explicitly maintain any state. Instead, we define actions to transform it and a view to visualize it. The view returns a plain object representation of the DOM known as a virtual DOM, and Hyperapp updates the real DOM to match it whenever the state changes.
+#### onupdate (alias: updated)
 
-Now it's your turn! Experiment with the code a bit. Spend some time thinking about how the view reacts to changes in the state. Can you add a button that resets the counter back to zero? Or how about multiple counters?
+This event is fired every time we update the element attributes. Use <samp>oldAttributes</samp> inside the event handler to check if any attributes changed or not.
 
-## Help, I'm stuck!
+```jsx
+import { h } from "hyperapp-r"
 
-We love to talk JavaScript and Hyperapp. If you've hit a stumbling block, hop on the [Hyperapp Slack](https://hyperappjs.herokuapp.com) or drop by [Spectrum](https://spectrum.chat/hyperapp) to get support, and if you don't receive an answer, or if you remain stuck, please file an issue, and we'll try to help you out.
+export const Textbox = ({ placeholder }) => (
+  <input
+    type="text"
+    placeholder={placeholder}
+    onupdate={(element, oldAttributes) => {
+      if (oldAttributes.placeholder !== placeholder) {
+        // Handle changes here!
+      }
+    }}
+  />
+)
+```
 
-Is anything wrong, unclear, missing? Help us [improve this page](https://github.com/jorgebucaran/hyperapp/fork).
+#### onremove (alias: removing)
 
-## Stay in the loop
+This event is fired before the element is removed from the DOM. Use it to create slide/fade out animations. Call <samp>done</samp> inside the function to remove the element. This event is not called in its child elements.
 
-- [Twitter](https://twitter.com/hyperappjs)
-- [Awesome](https://github.com/jorgebucaran/awesome-hyperapp)
-- [/r/hyperapp](https://www.reddit.com/r/hyperapp)
+```jsx
+import { h } from "hyperapp-r"
 
-## License
+export const MessageWithFadeout = ({ title }) => (
+  <div onremove={(element, done) => fadeout(element).then(done)}>
+    <h1>{title}</h1>
+  </div>
+)
+```
 
-[MIT](LICENSE.md)
+#### ondestroy (alias: destroyed)
+
+This event is fired after the element has been removed from the DOM, either directly or as a result of a parent being removed. Use it for invalidating timers, canceling a network request, removing global events listeners, etc.
+
+```jsx
+import { h } from "hyperapp-r"
+
+export const Camera = ({ onerror }) => (
+  <video
+    poster="loading.png"
+    oncreate={element => {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(stream => (element.srcObject = stream))
+        .catch(onerror)
+    }}
+    ondestroy={element => element.srcObject.getTracks()[0].stop()}
+  />
+)
+```
+
+### Style attribute by string (Return from Hyperapp V1)
+
+As with V1, the style attribute value can be specified as a string.
+
+```jsx
+// Standard
+<div style={{color: "red", textAlign: "center"}} />
+
+// It is an error in Hyperapp V2, but it is accepted in Hyperapp-R
+<div style="color: red; text-align: center;" />      
+```
+
+
+## TypeScript Support
+
+Hyperapp-R has full support for TypeScript.
+
+```tsx
+type State = number;
+
+// Action without payload - Action<State>
+const Decrement1: Action<State> = (state) => (state - 1);
+
+// Action with payload - Action<State, Payload>
+const Increment: Action<State, number> = (state, value) => (state + value);
+
+// Return other Action
+const Increment1: Action<State> = (state) => ([Increment, 1]);
+
+// Effect Runner - EffectRunner<State, NextPayload, Props>
+const TimeoutRunner: EffectRunner<State, void, {delay: number, action: Dispatchable<State>}> = (dispatch, props) => {
+  setTimeout(() => dispatch(action));
+}
+
+// Effect
+const timeout: Effect<State> = (action: Dispatchable<State>, delay: number) => [TimeoutRunner, {delay: delay}]
+
+// Action with Effect
+const DelayedIncrement1: Action<State> = (state) => ([state, timeout(Increment1, 1000)]);
+
+// app
+app<State>({
+    init: 0
+  , view: (state) => (
+      <h2>{state}</h2>
+      <button onclick={Decrement1}>-1</button>
+      <button onclick={Increment1}>+1</button>
+      <button onclick={DelayedIncrement1}>Delayed +1</button>
+    )
+});
+```
+
+

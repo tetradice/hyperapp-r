@@ -1,16 +1,22 @@
 {
   "name": "@hyperapp/time",
-  "description": "Time effects and subscriptions for Hyperapp.",
-  "version": "0.0.10",
-  "main": "src/index.js",
+  "description": "Time effects and subscriptions for Hyperapp. (fork from @hyperapp/time)",
+  "version": "0.0.10-rc1",
+  "main": "dist/hyperapp-r-time.js",
   "module": "src/index.js",
+  "typings": "time.d.ts",
   "license": "MIT",
-  "repository": "https://github.com/jorgebucaran/hyperapp/tree/master/lib/time",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/tetradice/hyperapp-r.git",
+    "directory": "lib/time"
+  },
   "files": [
     "src",
-    "dist"
+    "dist",
+    "time.d.ts"
   ],
-  "author": "Jorge Bucaran",
+  "author": "Dice <tetradice@gmail.com>",
   "keywords": [
     "hyperapp",
     "subscriptions",

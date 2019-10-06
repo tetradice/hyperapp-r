@@ -1,18 +1,24 @@
 {
-  "name": "@hyperapp/events",
-  "description": "Global events and event utilities for Hyperapp.",
-  "version": "0.0.3",
-  "main": "src/index.js",
+  "name": "@hyperapp-r/events",
+  "description": "Global events and event utilities for Hyperapp. (fork from @hyperapp/events)",
+  "version": "0.0.3-rc1",
+  "main": "dist/hyperapp-r-events.js",
   "module": "src/index.js",
   "unpkg": "src/index.js",
   "browser": "src/index.js",
+  "typings": "events.d.ts",
   "license": "MIT",
-  "repository": "jorgebucaran/hyperapp/lib/events",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/tetradice/hyperapp-r.git",
+    "directory": "lib/events"
+  },
   "files": [
     "src",
-    "dist"
+    "dist",
+    "events.d.ts"
   ],
-  "author": "Jorge Bucaran",
+  "author": "Dice <tetradice@gmail.com>",
   "keywords": [
     "hyperapp",
     "events"

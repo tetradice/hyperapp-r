@@ -1,16 +1,22 @@
 {
-    "name": "@hyperapp/random",
-    "description": "Declarative randomness for Hyperapp.",
-    "version": "0.0.0",
-    "main": "src/index.js",
+    "name": "@hyperapp-r/random",
+    "description": "Declarative randomness for Hyperapp. (fork from @hyperapp/random)",
+    "version": "0.0.0-rc1",
+    "main": "dist/hyperapp-r-random.js",
     "module": "src/index.js",
+    "typings": "random.d.ts",
     "license": "MIT",
-    "repository": "jorgebucaran/hyperapp/lib/random",
+    "repository": {
+      "type" : "git",
+      "url" : "https://github.com/tetradice/hyperapp-r.git",
+      "directory": "lib/random"
+    },
     "files": [
       "src",
-      "dist"
+      "dist",
+      "random.d.ts"
     ],
-    "author": "Jorge Bucaran",
+    "author": "Dice <tetradice@gmail.com>",
     "keywords": [
       "hyperapp",
       "random"
