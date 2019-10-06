@@ -1,7 +1,7 @@
 {
     "name": "@hyperapp-r/random",
     "description": "Declarative randomness for Hyperapp. (fork from @hyperapp/random)",
-    "version": "0.0.0-rc1",
+    "version": "0.0.0-rc2",
     "main": "dist/hyperapp-r-random.js",
     "module": "src/index.js",
     "typings": "random.d.ts",

@@ -1,7 +1,7 @@
 {
   "name": "@hyperapp-r/events",
   "description": "Global events and event utilities for Hyperapp. (fork from @hyperapp/events)",
-  "version": "0.0.3-rc1",
+  "version": "0.0.3-rc2",
   "main": "dist/hyperapp-r-events.js",
   "module": "src/index.js",
   "unpkg": "src/index.js",

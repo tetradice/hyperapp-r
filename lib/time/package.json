@@ -1,7 +1,7 @@
 {
   "name": "@hyperapp-r/time",
   "description": "Time effects and subscriptions for Hyperapp. (fork from @hyperapp/time)",
-  "version": "0.0.10-rc1",
+  "version": "0.0.10-rc2",
   "main": "dist/hyperapp-r-time.js",
   "module": "src/index.js",
   "typings": "time.d.ts",

@@ -3,9 +3,9 @@ var subLibNames = ["events", "random", "time"];
 task('default', ['bundle', 'minify']);
 
 task('bundle', function(){
-    jake.exec("rollup -i src/index.js -o dist/hyperapp-r.js --no-esModule -mf iife -n hyperapp_r", {printStdout: true, printStderr: true});
+    jake.exec("rollup -i src/index.js -o dist/hyperapp-r.js --no-esModule -mf cjs -n hyperapp_r", {printStdout: true, printStderr: true});
     for(var subLibName of subLibNames){
-        jake.exec(`rollup -i lib/${subLibName}/src/index.js -o lib/${subLibName}/dist/hyperapp-r-${subLibName}.js --no-esModule -mf iife -n hyperapp_r_${subLibName}`, {printStdout: true, printStderr: true});
+        jake.exec(`rollup -i lib/${subLibName}/src/index.js -o lib/${subLibName}/dist/hyperapp-r-${subLibName}.js --no-esModule -mf cjs -n hyperapp_r_${subLibName}`, {printStdout: true, printStderr: true});
     }
 });
 
