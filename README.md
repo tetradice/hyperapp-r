@@ -1,6 +1,6 @@
 # Hyperapp-R
 
-Hyperapp-R is fork from Hyperapp V2. 
+Hyperapp-R is fork from [Hyperapp V2](https://github.com/jorgebucaran/hyperapp).
 
 ## Features
 
@@ -13,6 +13,24 @@ Hyperapp-R is fork from Hyperapp V2.
     - Distribution package uses Common JS format instead of ES Module (This will avoid errors when using tools like jest)
 
 ## Install
+
+```sh
+# for NPM
+$ npm install --save-dev hyperapp-r
+
+# for Yarn
+$ yarn add -D hyperapp-r
+```
+
+The related library can be installed as follows.
+
+```sh
+# for NPM
+$ npm install --save-dev @hyperapp-r/events
+
+# for Yarn
+$ yarn add -D @hyperapp-r/events
+```
 
 ## Start Guide
 
@@ -143,6 +161,8 @@ As with V1, the style attribute value can be specified as a string.
 Hyperapp-R has full support for TypeScript.
 
 ```tsx
+import { Action, EffectRunner, Dispatchable, Effect, app, h } from "hyperapp-r";
+
 type State = number;
 
 // Action without payload - Action<State>
@@ -156,11 +176,11 @@ const Increment1: Action<State> = (state) => ([Increment, 1]);
 
 // Effect Runner - EffectRunner<State, NextPayload, Props>
 const TimeoutRunner: EffectRunner<State, void, {delay: number, action: Dispatchable<State>}> = (dispatch, props) => {
-  setTimeout(() => dispatch(action));
+  setTimeout(() => dispatch(props.action));
 }
 
 // Effect
-const timeout: Effect<State> = (action: Dispatchable<State>, delay: number) => [TimeoutRunner, {delay: delay}]
+const timeout = (action: Dispatchable<State>, delay: number): Effect<State> => [TimeoutRunner, {delay: delay, action: action}]
 
 // Action with Effect
 const DelayedIncrement1: Action<State> = (state) => ([state, timeout(Increment1, 1000)]);
@@ -169,11 +189,14 @@ const DelayedIncrement1: Action<State> = (state) => ([state, timeout(Increment1,
 app<State>({
     init: 0
   , view: (state) => (
-      <h2>{state}</h2>
-      <button onclick={Decrement1}>-1</button>
-      <button onclick={Increment1}>+1</button>
-      <button onclick={DelayedIncrement1}>Delayed +1</button>
+      <div>
+        <h2>{state}</h2>
+        <button onclick={Decrement1}>-1</button>
+        <button onclick={Increment1}>+1</button>
+        <button onclick={DelayedIncrement1}>Delayed +1</button>
+      </div>
     )
+  , node: document.getElementById("app")!
 });
 ```
 
