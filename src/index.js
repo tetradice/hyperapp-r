@@ -418,10 +418,17 @@ var propsChanged = function(a, b) {
   for (var k in b) if (a[k] !== b[k]) return true
 }
 
+var getTextVNode = function(node) {
+  return typeof node === "string" ? createTextVNode(node) : node
+}
+
 var getVNode = function(newVNode, oldVNode) {
   return newVNode.type === LAZY_NODE
-    ? ((!oldVNode || propsChanged(oldVNode.lazy, newVNode.lazy)) &&
-        ((oldVNode = newVNode.lazy.view(newVNode.lazy)).lazy = newVNode.lazy),
+    ? ((!oldVNode ||
+        (oldVNode.type !== LAZY_NODE ||
+          propsChanged(oldVNode.lazy, newVNode.lazy))) &&
+        ((oldVNode = getTextVNode(newVNode.lazy.view(newVNode.lazy))).lazy =
+          newVNode.lazy),
       oldVNode)
     : newVNode
 }
@@ -473,7 +480,7 @@ export var h = function(name, props) {
       }
     } else if (vdom === false || vdom === true || vdom == null) {
     } else {
-      children.push(typeof vdom === "object" ? vdom : createTextVNode(vdom))
+      children.push(getTextVNode(vdom))
     }
   }
 
@@ -534,10 +541,7 @@ export var app = function(props) {
       node.parentNode,
       node,
       vdom,
-      (vdom =
-        typeof (vdom = view(state)) === "string"
-          ? createTextVNode(vdom)
-          : vdom),
+      (vdom = getTextVNode(view(state))),
       listener,
       false,
       lifecycleProcs

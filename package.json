@@ -1,20 +1,19 @@
 {
   "name": "hyperapp-r",
   "description": "The tiny framework for building web interfaces. (forked from hyperapp)",
-  "version": "2.0.1-rc2",
+  "version": "2.0.2",
   "main": "dist/hyperapp-r.js",
   "module": "src/index.js",
-  "unpkg": "dist/hyperapp-r.js",
-  "browser": "dist/hyperapp-r.js",
-  "typings": "hyperapp.d.ts",
+  "unpkg": "src/index.js",
+  "browser": "src/index.js",
   "license": "MIT",
-  "repository": "github:tetradice/hyperapp-r",
+  "repository": "jorgebucaran/hyperapp",
+  "homepage": "https://hyperapp.dev",
   "files": [
     "src",
-    "hyperapp.d.ts",
     "dist"
   ],
-  "author": "Dice",
+  "author": "Jorge Bucaran",
   "keywords": [
     "hyperapp",
     "frontend",
@@ -33,11 +32,10 @@
   },
   "devDependencies": {
     "esm": "^3.2.25",
-    "jake": "^8.1.1",
-    "jsdom": "15.1.1",
     "nyc": "^14.1.1",
+    "testmatrix": "^0.1.2",
+    "jsdom": "15.1.1",
     "rollup": "*",
-    "terser": "^4.1.3",
-    "testmatrix": "^0.1.2"
+    "terser": "^4.1.3"
   }
 }
