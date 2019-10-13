@@ -35,10 +35,9 @@
     "esm": "^3.2.25",
     "jake": "^8.1.1",
     "nyc": "^14.1.1",
-    "testmatrix": "^0.1.2",
     "jsdom": "15.1.1",
     "rollup": "*",
-    "testmatrix": "^0.1.2"
+    "testmatrix": "^0.1.2",
     "terser": "^4.3.8"
   }
 }
