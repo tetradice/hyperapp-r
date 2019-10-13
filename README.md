@@ -2,6 +2,8 @@
 
 Hyperapp-R is fork from [Hyperapp V2](https://github.com/jorgebucaran/hyperapp).
 
+(Version note: Hyperapp-R 2.0.3 = Hyperapp 2.0.2)
+
 ## Features
 
 - 99% backword compatibility -- Libraries and middleware for Hyperapp V2 can be used in Hyperapp-R as well
