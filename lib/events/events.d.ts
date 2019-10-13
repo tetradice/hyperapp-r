@@ -14,13 +14,19 @@ export declare function onKeyUp<S>(action: hyperappSubset.Dispatchable<S, EventA
 export declare function onFocus<S>(action: hyperappSubset.Dispatchable<S, EventArgument<'onfocus'>>): hyperappSubset.Subscription<S>;
 export declare function onBlur<S>(action: hyperappSubset.Dispatchable<S, EventArgument<'onblur'>>): hyperappSubset.Subscription<S>;
 
+export declare function onAnimationFrame<S>(action: hyperappSubset.Dispatchable<S, DOMHighResTimeStamp>): hyperappSubset.Subscription<S>;
+
 export declare function eventKey(e: Event): any;
+export declare function eventDetail(e: Event): any;
 export declare function targetChecked(e: Event): any;
 export declare function targetValue(e: Event): any;
 
 export declare function eventOptions<S>(props: { preventDefault?: boolean, stopPropagation?: boolean, action?: hyperappSubset.Dispatchable<S, Event> }): hyperappSubset.Effect<S>;
 export declare function preventDefault<S>(action: hyperappSubset.Dispatchable<S, Event>): hyperappSubset.Action<S, Event>;
 export declare function stopPropagation<S>(action: hyperappSubset.Dispatchable<S, Event>): hyperappSubset.Action<S, Event>;
+
+export declare function dispatchCustomEvent(props: {name: string}): hyperappSubset.Action<any>;
+export declare function createOnCustomEvent(eventName: string): hyperappSubset.Subscription<any>;
 
 declare namespace hyperappSubset {
     type PayloadCreator<DPayload, CPayload> = ((data: DPayload) => CPayload);

@@ -419,7 +419,7 @@ var propsChanged = function(a, b) {
 }
 
 var getTextVNode = function(node) {
-  return typeof node === "string" ? createTextVNode(node) : node
+  return typeof node === "object" ? node : createTextVNode(node)
 }
 
 var getVNode = function(newVNode, oldVNode) {
